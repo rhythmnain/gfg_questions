@@ -1,28 +1,28 @@
 class Solution {
-    public ArrayList<Integer> nextLargerElement(int[] arr) {
+    public ArrayList<Integer> nextGreater(int[] arr) {
         // code here
+         if (arr == null || arr.length == 0) return new ArrayList<>();
+
         int n = arr.length;
-        ArrayList<Integer> res = new ArrayList<>();
-        Stack<Integer> st = new Stack<>();
-        int[] temp = new int[n];
+        int[] res = new int[n];
+        Arrays.fill(res, -1);
 
-        for (int i = 2 * n - 1; i >= 0; i--) {
-            int num = arr[i % n];
+        Deque<Integer> stack = new ArrayDeque<>(); 
 
-            while (!st.isEmpty() && st.peek() <= num) {
-                st.pop();
+       
+        for (int i = 0; i < 2 * n; i++) {
+            int val = arr[i % n];
+
+            while (!stack.isEmpty() && arr[stack.peek()] < val) {
+                res[stack.pop()] = val;
             }
 
-            if (i < n) {
-                temp[i] = st.isEmpty() ? -1 : st.peek();
-            }
-
-            st.push(num);
-        }
-        for (int val : temp) {
-            res.add(val);
+            
+            if (i < n) stack.push(i);
         }
 
-        return res;
+        ArrayList<Integer> ans = new ArrayList<>(n);
+        for (int x : res) ans.add(x);
+        return ans;
     }
 }
