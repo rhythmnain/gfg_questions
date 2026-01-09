@@ -1,23 +1,18 @@
 class Solution {
     public int countAtMostK(int arr[], int k) {
         // code here
-        Map<Integer,Integer> map=new HashMap<>();
-        int right=0,left=0,i=0;
-        int result=-1;
-        int n=arr.length;
-        while(right<n){
-            map.put(arr[right],map.getOrDefault(arr[right],0)+1);
-            
+         HashMap<Integer, Integer> map=new HashMap<>();
+        int cnt=0,l=0,r=0;
+        while(l<arr.length){
+            map.put(arr[l], map.getOrDefault(arr[l], 0)+1);
             while(map.size()>k){
-                map.put(arr[left],map.get(arr[left])-1);
-                if(map.get(arr[left])==0){
-                    map.remove(arr[left]);
-                }
-                left++;
+                map.put(arr[r], map.getOrDefault(arr[r], 0)-1);
+                if(map.get(arr[r])==0) map.remove(arr[r]);
+                r++;
             }
-            result+=right-left+1;
-            right++;
+            cnt += l-r+1;
+            l++;
         }
-        return result+1;
+        return cnt;
     }
 }
